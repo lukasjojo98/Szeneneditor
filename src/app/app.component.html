@@ -1,0 +1,12 @@
+<div style="display: flex; flex-direction: column;">
+<app-nav-bar></app-nav-bar>
+<div class="container">
+    <div class="canvas-item"  #canvasItem>
+        <div class="resizer" (mousedown)="handleMouseDown()"></div>
+        <app-three-canvas></app-three-canvas>
+    </div>
+    <div class="menu-panel" #menuPanel>
+        <app-menu-card></app-menu-card>
+    </div>
+</div>
+</div>

@@ -1,0 +1,36 @@
+<div class="container">
+    <div class="objects">
+    <div class="object-item" *ngFor="let object of this.getObjects()" (click)="handleClick($event)" id="{{object.userData['id']}}">
+        <span class="circle"></span>
+            {{object.name}}
+    </div>
+</div>
+<div>
+    <div class="property-container">
+        <div class="row">
+            <div class="property">Background</div>
+            <div class="value"><input type="color" value="#ffffff" (change)="this.changeBackgroundColor($event)"></div>
+        </div>
+    </div>
+</div>
+<div class="property-container">
+    Object
+    <div class="row">
+        <div class="property">Name</div>
+        <div class="value">{{this.getSelectedObjectProperty("name")}}</div>
+    </div>
+    <div class="row">
+        <div class="property">Type</div>
+        <div class="value">{{this.getSelectedObjectProperty("type")}}</div>
+    </div>
+    
+    <div *ngFor="let pair of this.getProperties(); index as i" class="row">
+        <div class="property">{{pair}}</div>
+        <div class="value">    
+            <div class="value-container">
+                    <input *ngFor="let value of this.getValuesToProperty(i); let j = index" type="number" value="{{value}}" (change)="this.transformObject($event)" id="{{i + '' + j}}" style="background-color: transparent; border: none; cursor: ns-resize; color: blue;">
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>

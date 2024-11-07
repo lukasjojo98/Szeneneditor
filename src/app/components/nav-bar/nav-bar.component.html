@@ -1,0 +1,39 @@
+<div class="container">
+    <button mat-button [matMenuTriggerFor]="file">File</button>
+    <button mat-button >Edit</button>
+    <button mat-button [matMenuTriggerFor]="add">Add</button>
+    <button mat-button [matMenuTriggerFor]="view">View</button>
+    <button mat-button >Help</button>
+</div>
+<mat-menu #file="matMenu">
+  <button mat-menu-item [matMenuTriggerFor]="New">New</button>
+  <button mat-menu-item>Open</button>
+  <button mat-menu-item>Save</button>
+  <button mat-menu-item (click)="handleClick()">Import</button>
+  <button mat-menu-item (click)="exportScene()">Export</button>
+</mat-menu>
+
+<mat-menu #New="matMenu">
+  <button mat-menu-item>Empty</button>
+</mat-menu>
+
+<mat-menu #add="matMenu">
+  <button mat-menu-item>Group</button>
+  <button mat-menu-item [matMenuTriggerFor]="mesh">Mesh</button>
+  <button mat-menu-item>Light</button>
+  <button mat-menu-item>Camera</button>
+</mat-menu>
+
+<mat-menu #view="matMenu">
+  <button mat-menu-item (click)="toggleGrid()">Grid Helper</button>
+</mat-menu>
+
+<mat-menu #mesh="matMenu">
+  <button mat-menu-item (click)="addPrimitive($event)">Box</button>
+  <button mat-menu-item (click)="addPrimitive($event)">Capsule</button>
+  <button mat-menu-item (click)="addPrimitive($event)">Circle</button>
+  <button mat-menu-item (click)="addPrimitive($event)">Sphere</button>
+</mat-menu>
+
+<input type="file" style="display: none;" id="file-import" (change)="importModel($event)">
+<a href="" id="download-element" style="display: none;"></a>

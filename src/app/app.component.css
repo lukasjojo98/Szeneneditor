@@ -1,0 +1,24 @@
+.resizer {
+    position: absolute;
+    right: 0;
+    width: 5px;
+    height: 100%;
+}
+.resizer:hover {
+    cursor: col-resize;
+    background-color: blue;
+}
+.menu-panel {
+    position: relative;
+    min-width: 400px;
+    overflow: hidden;
+    background: rgba(238,238,238,255);
+}
+.container {
+    display: flex;
+}
+.canvas-item {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+}
