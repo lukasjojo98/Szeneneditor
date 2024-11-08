@@ -3,6 +3,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { DragControls } from 'three/examples/jsm/controls/DragControls.js';
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js';
 import { SelectionService } from './selection.service';
+import { ThreeService } from './basic-three.service';
+import * as THREE from 'three';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class ControlService {
   private transformControls!: TransformControls;
   private coordinationType !: string;
 
-  constructor(private selectionService: SelectionService) { }
+  constructor(private selectionService: SelectionService, private threeService: ThreeService) { }
 
   createControls(type: string[], camera: any, renderer: HTMLElement, elements?: any): any {
     for(let i = 0; i < type.length; i++){
@@ -74,7 +76,14 @@ export class ControlService {
 
   createTransformControls(camera: any, renderer: HTMLElement, elements?: any) {
     this.transformControls = new TransformControls(camera, renderer);
-    this.transformControls.addEventListener("change", (event: any) => {
+
+    this.transformControls.addEventListener("change", () => {
+      const helperElements = this.threeService.getHelperElements();
+          for(let i = 0; i < helperElements.length; i++) {
+            if(helperElements[i].type == "SpotLightHelper"){
+              helperElements[i].update();
+            }
+          }
     });
     this.transformControls.addEventListener("dragging-changed", (event) => {
       this.orbitControls.enabled = !event.value;
@@ -84,6 +93,9 @@ export class ControlService {
   }
   public attachTransformControl(object: any) {
     this.transformControls.attach(object);
+  }
+  public detachTransformControl() {
+    this.transformControls.detach();
   }
   public setCoordinationType(coordinate: string): void {
     this.coordinationType = coordinate;

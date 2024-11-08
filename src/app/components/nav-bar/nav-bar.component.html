@@ -7,9 +7,9 @@
 </div>
 <mat-menu #file="matMenu">
   <button mat-menu-item [matMenuTriggerFor]="New">New</button>
-  <button mat-menu-item>Open</button>
-  <button mat-menu-item>Save</button>
-  <button mat-menu-item (click)="handleClick()">Import</button>
+  <button mat-menu-item (click)="handleClick($event)">Open</button>
+  <button mat-menu-item (click)="exportScene()">Save</button>
+  <button mat-menu-item (click)="handleClick($event)">Import</button>
   <button mat-menu-item (click)="exportScene()">Export</button>
 </mat-menu>
 
@@ -20,8 +20,8 @@
 <mat-menu #add="matMenu">
   <button mat-menu-item>Group</button>
   <button mat-menu-item [matMenuTriggerFor]="mesh">Mesh</button>
-  <button mat-menu-item>Light</button>
-  <button mat-menu-item>Camera</button>
+  <button mat-menu-item [matMenuTriggerFor]="light">Light</button>
+  <button mat-menu-item [matMenuTriggerFor]="camera">Camera</button>
 </mat-menu>
 
 <mat-menu #view="matMenu">
@@ -35,5 +35,19 @@
   <button mat-menu-item (click)="addPrimitive($event)">Sphere</button>
 </mat-menu>
 
+<mat-menu #light="matMenu">
+  <button mat-menu-item (click)="addLight($event)">Ambient</button>
+  <button mat-menu-item (click)="addLight($event)">Directional</button>
+  <button mat-menu-item (click)="addLight($event)">Hemisphere</button>
+  <button mat-menu-item (click)="addLight($event)">Point</button>
+  <button mat-menu-item (click)="addLight($event)">Spot</button>
+</mat-menu>
+
+<mat-menu #camera="matMenu">
+  <button mat-menu-item (click)="addCamera($event)">Orthographic</button>
+  <button mat-menu-item (click)="addCamera($event)">Perspective</button>
+</mat-menu>
+
 <input type="file" style="display: none;" id="file-import" (change)="importModel($event)">
+<input type="file" style="display: none;" id="scene-import" (change)="importScene($event)">
 <a href="" id="download-element" style="display: none;"></a>

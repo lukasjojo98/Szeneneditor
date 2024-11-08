@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +9,8 @@ export class ThreeService {
   private camera!: THREE.PerspectiveCamera;
   private renderer!: THREE.WebGLRenderer;
   private sphere!: THREE.Mesh;
-  private ambientLight!: THREE.AmbientLight;
   private dragElements: THREE.Object3D[] = [];
+  private helperElements: any[] = [];
   private gridHelper!: THREE.GridHelper;
 
   constructor() {
@@ -20,19 +19,15 @@ export class ThreeService {
 
   private initThree(): void {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0xffffff);
+    this.scene.background = new THREE.Color(0x808080);
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
-    this.ambientLight = new THREE.AmbientLight(0xFFFFFF);
-    this.ambientLight.position.set(0, 0, 0);
-    this.scene.add(this.ambientLight);
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.8;
     this.gridHelper = new THREE.GridHelper(10, 10);
     this.scene.add(this.gridHelper);
     this.camera.position.z = 5;
-    this.initLighting();
     this.animate();
   }
   public getRendererElement(): HTMLElement {
@@ -40,14 +35,6 @@ export class ThreeService {
   }
   public getRenderer(): THREE.WebGLRenderer{
     return this.renderer;
-  }
-  public initLighting(): void {
-    const hdrURL = new URL('assets/MR_INT-004_BigWindowTree_Thea.hdr', window.location.origin);
-    const loader = new RGBELoader();
-    loader.load(hdrURL.href, (texture) => {
-        this.scene.environment = texture;
-        texture.mapping = THREE.EquirectangularReflectionMapping;
-    }); 
   }
   public getScene(): THREE.Scene {
     return this.scene;
@@ -63,6 +50,12 @@ export class ThreeService {
   }
   public getElements(): any {
     return this.dragElements;
+  }
+  public getHelperElements(): any {
+    return this.helperElements;
+  }
+  public addHelperElements(element: any) {
+    this.helperElements.push(element);
   }
   public exportScene(): any {
     const originalEnvironment = this.scene.environment;

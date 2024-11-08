@@ -43,6 +43,7 @@ export class ThreeCanvasComponent implements AfterViewInit {
       this.controlService.setTransformControlMode("scale");
     }
     else if (event.key == 'Delete') {
+      this.controlService.detachTransformControl();
       this.storeElementsService.removeElement(this.selectionService.getSelectedObject());
       this.selectionService.setSelectedObject(new THREE.Object3D());
     }

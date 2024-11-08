@@ -22,6 +22,12 @@ export class StoreElementsService {
         this.threeService.getScene().remove(element);
       }
     });
+    const elements = this.threeService.getElements();
+    for(let i = 0; i < elements.length; i++){
+      if(elements[i] == element){
+        elements.splice(i, 1);
+      }
+    }
   }
   public findElementById(id: number): THREE.Object3D | undefined {
     const object = this.elements.find(element=>element.userData['id'] == id);
