@@ -17,7 +17,6 @@ import { ControlService } from '../../services/control.service';
 })
 export class NavBarComponent {
 
-
   constructor(private importModelService: ImportService, private threeService: ThreeService, private storeElementsService: StoreElementsService, private controlService: ControlService) {}
 
   public handleClick(event: any): any {

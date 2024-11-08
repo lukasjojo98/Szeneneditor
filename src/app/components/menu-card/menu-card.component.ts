@@ -92,4 +92,19 @@ export class MenuCardComponent {
       }
     }
   }
+  renderImage(){
+    const renderTarget = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
+
+    const renderer = this.threeService.getRenderer();
+    renderer.render(this.threeService.getScene(), this.threeService.getCamera());
+
+    this.downloadImage(renderer.domElement.toDataURL());
+  }
+
+  private downloadImage(url: any) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'capture.png';
+    link.click();
+  }
 }
