@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as THREE from 'three';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,7 @@ export class ThreeService {
     this.scene.background = new THREE.Color(0x808080);
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.scene.add(this.camera);
+    this.initLighting();
     this.renderer = new THREE.WebGLRenderer();
     this.renderer.setSize(window.innerWidth, window.innerHeight);
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -36,6 +38,14 @@ export class ThreeService {
   }
   public getRenderer(): THREE.WebGLRenderer{
     return this.renderer;
+  }
+  public initLighting(): void {
+    const hdrURL = new URL('assets/MR_INT-004_BigWindowTree_Thea.hdr', window.location.origin);
+    const loader = new RGBELoader();
+    loader.load(hdrURL.href, (texture) => {
+        this.scene.environment = texture;
+        texture.mapping = THREE.EquirectangularReflectionMapping;
+    }); 
   }
   public getScene(): THREE.Scene {
     return this.scene;

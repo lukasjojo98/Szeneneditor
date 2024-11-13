@@ -13,7 +13,7 @@ export class SelectionService {
 
   constructor() { }
 
-  getSelectedObject(): THREE.Object3D {
+  getSelectedObject(): THREE.Object3D | any {
     return this.selectedObject;
   }
   setSelectedObject(object: THREE.Object3D): void {

@@ -79,7 +79,7 @@ export class NavBarComponent {
   }
   
   private createAndAddShape(shapeName: string, geometry: THREE.BufferGeometry): void {
-    const material = new THREE.MeshStandardMaterial({ roughness: 0.5, metalness: 0.5 });
+    const material = new THREE.MeshStandardMaterial({ roughness: 0.5, metalness: 0.5 , color: "white"});
     const mesh = new THREE.Mesh(geometry, material);
     const index = this.storeElementsService.getIndex();
     const name = `${shapeName}${index}`;
