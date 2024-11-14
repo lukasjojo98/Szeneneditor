@@ -1,4 +1,7 @@
 <div class="container">
+<mat-tab-group>
+    <mat-tab label="Scene">
+
     <div class="objects">
     <div class="object-item" *ngFor="let object of this.getObjects()" (click)="handleClick($event)" id="{{object.userData['id']}}">
         <span class="circle"></span>
@@ -9,13 +12,36 @@
     <div class="property-container">
         <div class="row">
             <div class="property">Background</div>
-            <div class="value"><input type="color" value="#808080" (change)="this.changeBackgroundColor($event)"></div>
+            <div class="value"><input type="color" value="#D3D3D3" (change)="this.changeBackgroundColor($event)"></div>
         </div>
         <div class="render-item">
             <button mat-button (click)="renderImage()">Render Image</button>
         </div>
     </div>
 </div>
+    </mat-tab>
+    <mat-tab label="Settings">
+        <div class="property-container">
+            <div class="row">
+                <div class="property">Translate</div>
+                <div class="value"><input type="text" [(ngModel)]="translateShortcut" style="width: 1ch;"></div>
+            </div>
+            <div class="row">
+                <div class="property">Rotate</div>
+                <div class="value"><input type="text" [(ngModel)]="rotateShortcut" style="width: 1ch;"></div>
+            </div>
+            <div class="row">
+                <div class="property">Scale</div>
+                <div class="value"><input type="text" [(ngModel)]="scaleShortcut"  style="width: 1ch;"></div>
+            </div>
+            <div class="row">
+                <div class="property">Focus</div>
+                <div class="value"><input type="text" [(ngModel)]="focusShortcut"  style="width: 1ch;"></div>
+            </div>
+            
+        </div>
+    </mat-tab>
+</mat-tab-group>
 
 <mat-tab-group *ngIf="this.isSelected()">
     <mat-tab label="Object">
@@ -80,19 +106,15 @@
                 <div class="property">UUID</div>
                 <div class="value">{{this.getPropertyFromMaterial("uuid")}}</div>
             </div>
-            <div class="row">
+            <div *ngIf="this.hasMaterial()" class="row">
                 <div class="property">Color</div>
                 <div class="value"><input id="color-slider" [(ngModel)]="colorInput" type="color" (change)="this.changeColorOfSelectedObject($event)"></div>
             </div>
-           <!-- <div class="row">
-                <div class="property">Emissive</div>
-                <div class="value"><input id="emissive-slider" type="color"></div>
-            </div>-->
-            <div class="row">
+            <div *ngIf="this.hasMaterial()" class="row">
                 <div class="property">Roughness</div>
                 <div class="value"><input [(ngModel)]="roughnessInput" type="number" min="0" max="1" (change)="this.changeMaterialProperty('roughness')" style="background-color: transparent; border: none; cursor: ns-resize; color: blue;"></div>
             </div>
-            <div class="row">
+            <div *ngIf="this.hasMaterial()" class="row">
                 <div class="property">Metalness</div>
                 <div class="value"><input [(ngModel)]="metalnessInput" type="number" min="0" max="1" (change)="this.changeMaterialProperty('metalness')" style="background-color: transparent; border: none; cursor: ns-resize; color: blue;"></div>
             </div>

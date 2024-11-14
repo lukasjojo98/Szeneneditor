@@ -15,12 +15,12 @@ export class ThreeService {
   private gridHelper!: THREE.GridHelper;
 
   constructor() {
-    this.initThree();
+    this.initScene();
   }
 
-  private initThree(): void {
+  private initScene(): void {
     this.scene = new THREE.Scene();
-    this.scene.background = new THREE.Color(0x808080);
+    this.scene.background = new THREE.Color(0xD3D3D3);
     this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
     this.scene.add(this.camera);
     this.initLighting();

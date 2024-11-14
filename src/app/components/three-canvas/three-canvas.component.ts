@@ -23,29 +23,8 @@ export class ThreeCanvasComponent implements AfterViewInit {
     this.threeService.getScene().add(transformControls);
   }
   ngOnInit(): void {
-    this.ngZone.runOutsideAngular(() => {
-      window.addEventListener('keydown', this.onKeyDown.bind(this));
-    });
   }
 
   ngOnDestroy(): void {
-    window.removeEventListener('keydown', this.onKeyDown.bind(this));
-  }
-
-  onKeyDown(event: KeyboardEvent): void {
-    if(event.key == 'e') {
-      this.controlService.setTransformControlMode("rotate");
-    }
-    else if(event.key == 'w'){
-      this.controlService.setTransformControlMode("translate");
-    }
-    else if(event.key == 'r'){
-      this.controlService.setTransformControlMode("scale");
-    }
-    else if (event.key == 'Delete') {
-      this.controlService.detachTransformControl();
-      this.storeElementsService.removeElement(this.selectionService.getSelectedObject());
-      this.selectionService.setSelectedObject(new THREE.Object3D());
-    }
   }
 }

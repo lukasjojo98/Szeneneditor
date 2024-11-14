@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, Renderer2, NgZone } from '@angular/core';
 import {MatCardModule} from '@angular/material/card';
 import { SelectionService } from '../../services/selection.service';
 import { CommonModule } from '@angular/common';
@@ -18,8 +18,9 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './menu-card.component.css'
 })
 
-export class MenuCardComponent{
+export class MenuCardComponent implements OnInit, OnDestroy{
 
+  private clickListener: (() => void) | undefined;
   objectProperties!: Map<string,string>;
   width!: any;
   height!: any;
@@ -27,8 +28,61 @@ export class MenuCardComponent{
   roughnessInput!: any;
   metalnessInput!: any;
   colorInput!: any;
+  translateShortcut!: any;
+  rotateShortcut!: any;
+  scaleShortcut!: any;
+  focusShortcut!: any;
+  
 
-  constructor(private selectionService: SelectionService, private threeService: ThreeService, private controlService: ControlService, private storeElementsService: StoreElementsService) {}
+  constructor(private selectionService: SelectionService, private threeService: ThreeService, private controlService: ControlService, private storeElementsService: StoreElementsService, private renderer: Renderer2, private ngZone: NgZone) {}
+  
+  ngOnDestroy(): void {
+    if(this.clickListener) {
+      this.clickListener();
+    }
+    window.removeEventListener('keydown', this.onKeyDown.bind(this));
+  }
+  ngOnInit(): void {
+    this.translateShortcut = "w";
+    this.scaleShortcut = "r";
+    this.rotateShortcut = "e";
+    this.focusShortcut = "f";
+    this.clickListener = this.renderer.listen('window', 'click', (event) => {
+      const element = this.selectionService.getSelectedObject(); 
+      if(element && this.hasMaterial()){
+        this.roughnessInput = element.material.roughness;
+        this.metalnessInput = element.material.metalness;
+        this.colorInput = this.rgbToHex(element.material.color.r, element.material.color.g, element.material.color.b).replace("0x","#");
+      }
+    });
+
+    this.ngZone.runOutsideAngular(() => {
+      window.addEventListener('keydown', this.onKeyDown.bind(this));
+    });
+  }
+
+  onKeyDown(event: KeyboardEvent): void {
+    if(event.key == this.rotateShortcut) {
+      this.controlService.setTransformControlMode("rotate");
+    }
+    else if(event.key == this.translateShortcut){
+      this.controlService.setTransformControlMode("translate");
+    }
+    else if(event.key == this.scaleShortcut){
+      this.controlService.setTransformControlMode("scale");
+    }
+    else if (event.key == 'Delete') {
+      this.controlService.detachTransformControl();
+      this.storeElementsService.removeElement(this.selectionService.getSelectedObject());
+      this.selectionService.setSelectedObject(new THREE.Object3D());
+    }
+    else if(event.key == this.focusShortcut){
+      const element = this.selectionService.getSelectedObject();
+      var aabb = new THREE.Box3().setFromObject(element);
+      var center = aabb.getSize(new THREE.Vector3());
+      this.threeService.getCamera().lookAt(center);
+    }
+  }
 
   getProperties(): any {
     return Array.from(this.selectionService.getProperties().keys()); 
@@ -46,7 +100,25 @@ export class MenuCardComponent{
     return this.selectionService.getSelectedObject();
   }
   getSelectedType() {
-    return this.selectionService.getSelectedObject().geometry.type;
+    const element = this.selectionService.getSelectedObject();
+    if(element.geometry && element.geometry.type == "BoxGeometry"){
+      return this.selectionService.getSelectedObject().geometry.type;
+    }
+    return "";
+  }
+  hasMaterial(){
+    const element = this.selectionService.getSelectedObject();
+    if(element.material){
+      return true;
+    }
+    return false;
+  }
+  hasGeometry(){
+    const element = this.selectionService.getSelectedObject();
+    if(element.geometry){
+      return true;
+    }
+    return false;
   }
   getSelectedObjectProperty(input: string): any {
     const element = this.selectionService.getSelectedObject();
@@ -64,7 +136,7 @@ export class MenuCardComponent{
   }
   getPropertyFromGeometry(input: string): any {
     const element = this.selectionService.getSelectedObject().geometry;
-    if(element){
+    if(element && element.type != "BufferGeometry"){
       this.width = element.parameters.width;
       this.height = element.parameters.height;
       this.depth = element.parameters.depth;
@@ -107,7 +179,11 @@ export class MenuCardComponent{
       objectElements[i].classList.remove('selected');
     }
     event.srcElement.classList.add('selected');
-    this.controlService.attachTransformControl(this.storeElementsService.findElementById(id));
+    const element = this.storeElementsService.findElementById(id);
+    if(element){
+      this.controlService.attachTransformControl(element);
+      this.selectionService.setSelectedObject(element);
+    }
   }
   transformObject(event: any): any {
     const object = this.selectionService.getSelectedObject();
