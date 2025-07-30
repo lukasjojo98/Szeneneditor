@@ -1,72 +1,70 @@
-# 🎬 Szeneneditor
+# 🎬 Scene Editor
 
-Ein interaktiver 3D-Szeneneditor – inspiriert vom offiziellen [Three.js Editor](https://threejs.org/editor/).  
-Ermöglicht das Erstellen, Bearbeiten und Rendern komplexer 3D-Szenen direkt im Browser oder als Desktop-Anwendung.
+An interactive 3D scene editor — inspired by the official [Three.js Editor](https://threejs.org/editor/).  
+Allows users to create, edit, and render complex 3D scenes directly in the browser or as a desktop application.
 
 ---
 
 ## 📺 Demo
 
-> 👉 **Live-Demo:** [Hier ausprobieren](https://szeneneditor.vercel.app)  
-> ![Szeneneditor Vorschau](preview.png)  
+> 👉 **Live Demo:** [Try it here](https://szeneneditor.vercel.app)  
+> ![Scene Editor Preview](preview.png)  
 
 ---
 
-## 🧱 Aufbau
+## 🧱 Structure
 
-Die Benutzeroberfläche und Funktionsweise orientieren sich am bekannten [Three.js Editor](https://threejs.org/editor/).  
-Objekte können direkt in der Szene manipuliert, hinzugefügt und gelöscht werden.
-
----
-
-## ⌨️ Tastenkombinationen
-
-Zur effizienten Bearbeitung von Objekten gibt es folgende Shortcuts:
-
-| Taste  | Funktion                       |
-|--------|--------------------------------|
-| `W`    | Verschieben (Translation)      |
-| `E`    | Rotieren (Rotation)            |
-| `R`    | Skalieren                      |
-| `Entf` | Objekt aus Szene entfernen     |
+The user interface and functionality are based on the well-known [Three.js Editor](https://threejs.org/editor/).  
+Objects can be directly manipulated, added, and deleted within the scene.
 
 ---
 
-## ✨ Funktionen
+## ⌨️ Shortcuts
 
-- ➕ Hinzufügen von **primitiven Objekten** (z. B. Cube, Sphere, Plane)
-- 💡 Platzieren von **Lichtquellen** und **Kameras**
-- 🖼️ Erstellen von **Renderings**
-- 📂 **Import von 3D-Modellen** wie `.obj`, `.fbx` oder `.gltf`
+To streamline object manipulation, the following keyboard shortcuts are available:
 
----
-
-## 🔭 Geplante Features
-
-- ⚙️ **Physik-Simulationen** und dynamische Szenen
-- 🎯 **Beispielszenen** zum schnellen Einstieg
-- 🧩 **Individuell anpassbare Shortcuts**
-- 🔌 **Integration in andere Programme** (z. B. CAD-Tools, Game Engines)
+| Key    | Action                          |
+|--------|---------------------------------|
+| `W`    | Translate                       |
+| `E`    | Rotate                          |
+| `R`    | Scale                           |
+| `Del`  | Remove selected object from scene |
 
 ---
 
-## 📦 Technologien
+## ✨ Features
 
-> Falls relevant, kannst du diesen Abschnitt ergänzen:
+- ➕ Add **primitive objects** (e.g., Cube, Sphere, Plane)
+- 💡 Insert **lights** and **cameras**
+- 🖼️ Create **renderings** of your scene
+- 📂 **Import 3D models** such as `.obj`, `.fbx`, or `.gltf`
+
+---
+
+## 🔭 Planned Features
+
+- ⚙️ **Physics simulations** and dynamic scene mechanics
+- 🎯 **Predefined example scenes** for quick setup
+- 🧩 **Customizable shortcuts**
+- 🔌 **Integration with external tools** (e.g., CAD software, game engines)
+
+---
+
+## 📦 Technologies
 
 - Three.js
 - WebGL / WebGPU
 - Angular
-- Drag-and-Drop UI Libraries
+- Drag-and-drop UI libraries
 
 ---
 
-## 🛠️ Mitwirken
+## 🛠️ Contributing
 
-Pull Requests sind willkommen! Vorschläge für neue Features oder Bugfixes einfach im [Issue-Tracker](https://github.com/dein-projekt/issues) posten.
+Pull requests are welcome! Feel free to suggest new features or report bugs via the [issue tracker](https://github.com/your-project/issues).
 
 ---
 
-## 📄 Lizenz
+## 📄 License
 
-MIT License – frei verwendbar für private und kommerzielle Zwecke.
+MIT License – free to use, modify, and distribute for personal or commercial purposes.
